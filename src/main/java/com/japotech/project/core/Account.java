@@ -1,14 +1,15 @@
 package com.japotech.project.core;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Scanner;
 import java.util.Vector;
+
 
 public class Account {
     
-    public final static String BEGIN_ACCOUNT = "BACCT";
+    public final static String BEGIN_ACCOUNT = "BACCNT";
 
     private String name;
     private Vector<Transaction> transactions;
@@ -49,13 +50,14 @@ public class Account {
         transactions.add(t);
     }
 
-    final static public void readAccountData(Account acc, BufferedReader br) {
-        try {
-            acc.name = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
+    final static public void readAccountData(Account acc, String content) {
+        acc.name = content.trim();
+    }
+
+    
+    final static public void readAccountData(Account acc, Scanner sc) throws IOException {
+        sc.useDelimiter("\\s");
+        acc.name = sc.nextLine();
     }
 
     final static public void writeAccountData(Account acc, BufferedWriter bw) throws IOException {

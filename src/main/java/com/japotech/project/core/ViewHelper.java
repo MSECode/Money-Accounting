@@ -36,6 +36,14 @@ public class ViewHelper {
     System.out.print("\n\n\n\n\n");
     }
 
+    final public static void printIntro(UserInfo usi) throws Exception {
+        System.out.println(
+            "Welcome " + usi.getNickname() + ", this is Money Mng\n" + 
+            "It will help you tho manage your expenses\n" + 
+            "You can add you accounts and make deposits and withdrawals\n" + 
+            "If you want to see all the available functions input the help command\n" );
+    }
+
     final public static String prompt() throws IOException {
 
         String c = null;
@@ -79,7 +87,7 @@ public class ViewHelper {
     }
 
     final public static Account readAccount() throws IOException{
-        String accountName = null;
+        String accountName = "";
         System.out.print("New account name: ");
     
         accountName = scMain.nextLine();

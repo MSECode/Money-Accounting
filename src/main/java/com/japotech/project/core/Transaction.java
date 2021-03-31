@@ -1,12 +1,12 @@
 package com.japotech.project.core;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 
 public class Transaction {
@@ -53,21 +53,30 @@ public class Transaction {
     }
 
     //Local methods
-    final static public void readTransactionData(Transaction t, BufferedReader br) {
-        try {
-            t.accountName = br.readLine();
-            t.transactionDateTime = ZonedDateTime.parse(br.readLine(), DateTimeFormatter.ofPattern("E dd-MM-yyyy HH:mm:ss O"));
-            t.amount = new BigDecimal(br.readLine()).setScale(2);
-            t.memo = br.readLine().trim();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    final static public void readTransactionData(Transaction t, String content) {
+        
+        String[] transData = content.split("\\s", 4);
+        t.accountName = transData[0].trim();
+        t.transactionDateTime = ZonedDateTime.parse(transData[1], DateTimeFormatter.ofPattern("Edd-MM-yyyyHH:mm:ssO"));
+        t.amount = new BigDecimal(transData[2].trim()).setScale(2);
+        t.memo = transData[3].trim();
     }
+
+    final static public void readTransactionData(Transaction t, Scanner sc) throws IOException {
+        
+        sc.delimiter();
+        t.accountName = sc.next();
+        // (DateTimeFormatter.ofPattern("E dd-MM-yyyy HH:mm:ss O")).toString()
+        t.transactionDateTime = ZonedDateTime.parse(sc.next(), DateTimeFormatter.ofPattern("Edd-MM-yyyyHH:mm:ssO"));
+        t.amount = new BigDecimal(sc.next()).setScale(2);
+        t.memo = sc.next().trim();
+    }
+
 
     final public void writeTransactionData(Transaction t, BufferedWriter bw) throws IOException{
         bw.write(BEGIN_TRANSACTION + " ");
         bw.write(t.accountName + " ");
-        bw.write(t.transactionDateTime.format(DateTimeFormatter.ofPattern("E dd-MM-yyyy HH:mm:ss O")).toString() + " ");
+        bw.write(t.transactionDateTime.format(DateTimeFormatter.ofPattern("Edd-MM-yyyyHH:mm:ssO")).toString() + " ");
         bw.write(String.valueOf(t.amount) + " ");
         bw.write(t.memo + "\n");
 
