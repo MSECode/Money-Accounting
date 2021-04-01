@@ -35,6 +35,13 @@ public class Transaction {
         this.transactionDateTime = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
     }
 
+    public Transaction(String _accountName, BigDecimal _amount, String _memo, ZonedDateTime _transactionDateTime) {
+        this.accountName = _accountName;
+        this.amount = _amount;
+        this.memo = _memo;
+        this.transactionDateTime = _transactionDateTime;
+    }
+
     //Getters
     final public String getAccountName() {
         return accountName;
