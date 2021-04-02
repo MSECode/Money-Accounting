@@ -119,6 +119,7 @@ public class App
 
         //Main loop of the program
         while (!quit) {
+            
             String command = ViewHelper.prompt();
 
             if (command.isEmpty()) {
@@ -134,14 +135,27 @@ public class App
                 }
             }
             else if (command.equals("deposit")) {
+                
                 Transaction t = ViewHelper.readTransaction(false, accounts);
-                ViewHelper.addToAccount(t, accounts);
-                System.out.println("Deposit complete \n\n");
+                if (t.getTransactionStatus()) {
+                    ViewHelper.addToAccount(t, accounts);
+                    System.out.println("Deposit complete \n\n");
+                }
+                else {
+                    System.out.println("Deposit incomplete \n\n");
+                }
+                
             }
             else if (command.equals("withdraw")) {
                 Transaction t = ViewHelper.readTransaction(true, accounts);
-                ViewHelper.addToAccount(t, accounts);
-                System.out.println("Withdraw complete \n\n");
+                if (t.getTransactionStatus()) {
+                    ViewHelper.addToAccount(t, accounts);
+                    System.out.println("Withdraw complete \n\n");
+                }
+                else {
+                    System.out.println("Withdraw incomplete \n\n");
+                }
+                
             }
             else if (command.equals("new")) {
                 Account acc = ViewHelper.readAccount();

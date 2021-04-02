@@ -61,28 +61,53 @@ public class ViewHelper {
         String account = "";
         BigDecimal amount = BigDecimal.ZERO;
         String memo = "";
+        String depType = "";
+        boolean isTransCorrect = false;
+        Transaction t = new Transaction();
 
         LineReader lr = new LineReader(new InputStreamReader(System.in));
-        System.out.print("Account name: ");
-        account = lr.readLine();
-        for (Account acc : accounts) {
-            if (account.equals(acc.getName())) {
-                System.out.print("Amount: ");
-                amount = new BigDecimal(lr.readLine()).setScale(2);
-                System.out.print("Memo: ");
-                memo = lr.readLine();
+
+        System.out.print("Please, specify if this is a new or old deposit [old/new]: ");
+        depType = lr.readLine().trim();
+        
+        if (depType.equalsIgnoreCase("new") || depType.equalsIgnoreCase("old")) {
+            System.out.print("Account name: ");
+            account = lr.readLine();
+            for (Account acc : accounts) {
+                if (account.equals(acc.getName())) {
+                    System.out.print("Amount: ");
+                    amount = new BigDecimal(lr.readLine()).setScale(2);
+                    System.out.print("Memo: ");
+                    memo = lr.readLine();
+                }
+                else {
+                    System.err.println("There is no account with this name");
+                }
             }
+            if (withdraw && amount.compareTo(BigDecimal.ZERO) > 0) {
+                amount = amount.negate();
+            }
+            
+            Transaction t1 = new Transaction(account, amount, memo);
+
+            if (depType.equalsIgnoreCase("new")) {
+                t = new Transaction(t1);
+            }
+
             else {
-                System.err.println("There is no account with this name");
+                Transaction t2 = new Transaction(t1);
+                Transaction.setTransactionDateTime(t2);
+                t = new Transaction(t2);
             }
+            isTransCorrect = true;
         }
-
-        if (withdraw && amount.compareTo(BigDecimal.ZERO) > 0) {
-            amount = amount.negate();
+        else  {
+            System.err.println("Type of deposit not correct \n" +
+                "Define if old or new, only");
+            
+            isTransCorrect = false;
         }
-
-        Transaction t = new Transaction(account, amount, memo);
-
+        Transaction.setTransactionStatus(t, isTransCorrect);
         return t;
     }
 
