@@ -158,9 +158,19 @@ public class App
                 
             }
             else if (command.equals("new")) {
+                boolean isSameName = false;
                 Account acc = ViewHelper.readAccount();
-                accounts.add(acc);
-                System.out.println("Account created \n\n");
+                for (Account a : accounts) {
+                    if(a.getName().equals(acc.getName()))
+                        isSameName = true;
+                }
+                if(!isSameName)
+                {
+                    accounts.add(acc);
+                    System.out.println("Account created \n\n");
+                }
+                else 
+                    System.out.println("Account name already exists \n\n");
             }
             else if (command.equals("delete")) {
                 ViewHelper.deleteAccount(accounts);
@@ -181,4 +191,7 @@ public class App
             e.printStackTrace();
         }   
     }
+//TODO
+// do not use space sepator, otherwise cannot find string with spaces for name and memos
+// write junit tests 
 }

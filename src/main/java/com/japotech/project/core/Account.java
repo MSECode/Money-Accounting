@@ -57,7 +57,7 @@ public class Account {
     
     final static public void readAccountData(Account acc, Scanner sc) throws IOException {
         sc.useDelimiter("\\s");
-        acc.name = sc.nextLine();
+        acc.name = sc.nextLine().trim();
     }
 
     final static public void writeAccountData(Account acc, BufferedWriter bw) throws IOException {

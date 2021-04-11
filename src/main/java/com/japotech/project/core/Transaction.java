@@ -30,7 +30,7 @@ public class Transaction {
         this.accountName = "";
         this.amount = BigDecimal.ZERO;
         this.memo = "";
-        this.transactionDateTime = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
+        this.transactionDateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.isTransCorrect = false;
     }
 
@@ -39,7 +39,7 @@ public class Transaction {
         this.accountName = _accountName;
         this.amount = _amount;
         this.memo = _memo;
-        this.transactionDateTime = ZonedDateTime.now(ZoneId.of("Europe/Rome"));
+        this.transactionDateTime = ZonedDateTime.now(ZoneId.systemDefault());
         this.isTransCorrect = false;
     }
 
@@ -48,7 +48,8 @@ public class Transaction {
         accountName = t.accountName;
         amount = t.amount;
         memo = t.memo;
-        this.isTransCorrect = false;
+        transactionDateTime = t.transactionDateTime;
+        isTransCorrect = t.isTransCorrect;
     }
 
     //Setters
@@ -58,17 +59,17 @@ public class Transaction {
 
     public static void setTransactionDateTime(Transaction t) throws IOException{
         LineReader lr = new LineReader(new InputStreamReader(System.in));
-        System.out.println("Please, set the Date as: Day yyyy-MM-dd \n" + 
-            "And the time as HH:mm:ss");
+        System.out.println("Please, set the Date as: Day dd-MM-yyyy");
         
         System.out.print("Date: ");
         String DateS = lr.readLine();
+        System.out.println("Please, set the Time as: HH:mm:ss");
         System.out.print("Time: ");
         String TimeS = lr.readLine();
-        LocalDate date = LocalDate.parse(DateS, DateTimeFormatter.ofPattern("E yyyy-MM-dd"));
+        LocalDate date = LocalDate.parse(DateS, DateTimeFormatter.ofPattern("EEE dd-MM-yyyy"));
         LocalTime time = LocalTime.parse(TimeS, DateTimeFormatter.ofPattern("HH:mm:ss"));
         
-        t.transactionDateTime = ZonedDateTime.of(date, time, ZoneId.of("Europe/Rome"));
+        t.transactionDateTime = ZonedDateTime.of(date, time, ZoneId.systemDefault());
     }
 
     public Transaction(String _accountName, BigDecimal _amount, String _memo, ZonedDateTime _transactionDateTime) {

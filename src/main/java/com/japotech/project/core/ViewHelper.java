@@ -41,7 +41,8 @@ public class ViewHelper {
             "Welcome " + usi.getNickname() + ", this is Money Mng\n" + 
             "It will help you tho manage your expenses\n" + 
             "You can add you accounts and make deposits and withdrawals\n" + 
-            "If you want to see all the available functions input the help command\n" );
+            "If you want to see all the available functions\n" +
+            "input the help command\n" );
     }
 
     final public static String prompt() throws IOException {
@@ -114,8 +115,7 @@ public class ViewHelper {
     final public static Account readAccount() throws IOException{
         String accountName = "";
         System.out.print("New account name: ");
-    
-        accountName = scMain.nextLine();
+        accountName = scMain.nextLine().trim();
 
         Account a = new Account(accountName);
         return a;
@@ -209,3 +209,4 @@ public class ViewHelper {
 
     }
 }
+
